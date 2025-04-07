@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from accounts.forms import UserForm
+from accounts.forms import UserForm, UserUpdateForm
 
 
 # Create your views here.
@@ -47,3 +47,16 @@ def logout(request):
 @login_required
 def home(request):
     return render(request, "accounts/home.html", {})
+
+@login_required
+def profile(request):
+    return render(request, "accounts/profile.html", {"form": {}})
+    pass
+    """if request.method == "POST":
+        form = UserUpdateForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserUpdateForm()
+    return render(request, "accounts/profile.html", {"form": form})
+    """

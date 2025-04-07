@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<p>If you're seeing this, then you're logged in.</p>
+	<div class="d-inline d-flex justify-content-between">
+        <p>Welcome, {{ request.user }}.</p>
+        <a href="{% url 'accounts:profile' %}"><p>Profile</p></a>
+    </div>
 
     <form action="{% url 'accounts:logout' %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Logout" class="btn btn-primary">
     </form>
+
+
 {% endblock %}
