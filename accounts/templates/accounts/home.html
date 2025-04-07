@@ -2,7 +2,7 @@
 
 {% block content %}
 	<div class="d-inline d-flex justify-content-between">
-        <p>Welcome, {{ request.user }}.</p>
+        <p>Welcome, {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user }}{% endif %}.</p>
         <a href="{% url 'accounts:profile' %}"><p>Profile</p></a>
     </div>
 

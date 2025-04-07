@@ -50,13 +50,10 @@ def home(request):
 
 @login_required
 def profile(request):
-    return render(request, "accounts/profile.html", {"form": {}})
-    pass
-    """if request.method == "POST":
-        form = UserUpdateForm(request.POST)
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
     else:
-        form = UserUpdateForm()
+        form = UserUpdateForm(instance=request.user)
     return render(request, "accounts/profile.html", {"form": form})
-    """
