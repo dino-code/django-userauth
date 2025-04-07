@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block content %}
+    <h2 class="pb-4">Log in</h2>
+    <form action="{% url 'accounts:login' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Log in" class="btn btn-primary">
+    </form>
 
-    {{ form }}
 {% endblock %}
 

@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Create an Account</h2>
-    <form action="{% url 'accounts:login' %}">
-    {{ form }}
-
-    </form>
+    <h2 class="pb-4">Create an Account</h2>
+    <div clas="pt">
+        <form action="{% url 'accounts:login' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Register" class="btn btn-primary mt-4">
+        </form>
+    </div>
 {% endblock %}

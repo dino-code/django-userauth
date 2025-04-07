@@ -1,3 +1,5 @@
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -9,10 +11,14 @@ from accounts.forms import UserForm
 # Create your views here.
 def login(request):
     # Form has been submitted.
-    if request.method == "post":
-        form = AuthenticationForm(request.POST)
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            return HttpResponseRedirect("")
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                return HttpResponseRedirect(reverse("accounts:home"))
     # If it's a GET request, return an empty form
     else:
         form = AuthenticationForm()
@@ -21,13 +27,17 @@ def login(request):
 
 def register(request):
     # Form has been submitted.
-    if request.method == "post":
+    if request.method == "POST":
         # bind data to form
         form = UserForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect(reverse("login/"))
+            return HttpResponseRedirect(reverse("accounts:login"))
     # If it's a GET request, return an empty form
     else:
         form = UserForm()
 
     return render(request, "accounts/register.html", {"form": form})
+
+@login_required
+def home(request):
+    return render(request, "accounts/home.html", {})
