@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
@@ -18,6 +18,7 @@ def login(request):
             password = form.cleaned_data.get("password")
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                auth_login(request, user)
                 return HttpResponseRedirect(reverse("accounts:home"))
     # If it's a GET request, return an empty form
     else:
@@ -31,6 +32,7 @@ def register(request):
         # bind data to form
         form = UserForm(request.POST)
         if form.is_valid():
+            form.save()
             return HttpResponseRedirect(reverse("accounts:login"))
     # If it's a GET request, return an empty form
     else:

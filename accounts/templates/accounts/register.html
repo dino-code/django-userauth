@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
+{% block title %}
+	Register
+{% endblock %}
+
 {% block content %}
     <h2 class="pb-4">Create an Account</h2>
     <div clas="pt">
-        <form action="{% url 'accounts:login' %}" method="post">
+        <form action="{% url 'accounts:register' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Register" class="btn btn-primary mt-4">
